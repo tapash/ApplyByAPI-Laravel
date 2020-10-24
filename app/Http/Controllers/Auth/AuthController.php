@@ -117,7 +117,7 @@ class AuthController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         return response()->json([
-            'success' => 'false',
+            'success' => false,
             'message' => 'Incorrect email or password'
         ], 401);
     }
