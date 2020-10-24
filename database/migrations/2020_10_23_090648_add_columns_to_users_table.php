@@ -18,6 +18,7 @@ class AddColumnsToUsersTable extends Migration
             $table->string('company_logo')->nullable()->after('company_name')->default('');
             $table->string('company_website')->nullable()->after('company_logo')->default('');
             $table->text('company_description')->nullable()->after('company_website')->default('');
+            $table->text('company_address')->nullable()->after('company_description')->default('');
         });
     }
 
@@ -33,7 +34,8 @@ class AddColumnsToUsersTable extends Migration
                 'company_name',
                 'company_logo',
                 'company_website',
-                'company_description'
+                'company_description',
+                'company_address',
             ]);
         });
     }
