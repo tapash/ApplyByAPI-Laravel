@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 //Authentication routes
 Route::group([
     'middleware' => 'api',
@@ -25,4 +24,12 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
+});
+
+//Authentication routes
+Route::group([
+    'namespace' => 'App\Http\Controllers\Auth',
+    'prefix' => 'auth'
+], function () {
+    Route::post('register', 'RegisterController@register');
 });
