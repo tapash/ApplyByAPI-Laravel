@@ -19,6 +19,7 @@ class AddColumnsToUsersTable extends Migration
             $table->string('company_website')->nullable()->after('company_logo')->default('');
             $table->text('company_description')->nullable()->after('company_website')->default('');
             $table->text('company_address')->nullable()->after('company_description')->default('');
+            $table->softDeletes();
         });
     }
 
