@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreJobRequest;
+use App\Http\Requests\UpdateJobRequest;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
@@ -14,7 +17,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        return Job::all();
     }
 
     /**
@@ -23,9 +26,16 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreJobRequest $request)
     {
-        //
+        auth()->user()->jobs(
+            $request->validated()
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job is successfully created'
+        ]);
     }
 
     /**
@@ -36,7 +46,7 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        //
+        return $job;
     }
 
     /**
@@ -46,9 +56,16 @@ class JobController extends Controller
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(UpdateJobRequest $request, Job $job)
     {
-        //
+        $job->update(
+            $request->validated()
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job is successfully updated'
+        ]);
     }
 
     /**
@@ -59,6 +76,11 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        //
+        $job->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job is successfully deleted'
+        ]);
     }
 }
