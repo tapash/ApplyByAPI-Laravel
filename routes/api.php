@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\JobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,19 +20,24 @@ use Illuminate\Support\Facades\Route;
 //Authentication routes
 Route::group([
     'middleware' => 'api',
-    'namespace' => 'App\Http\Controllers\Auth',
     'prefix' => 'auth'
 ], function () {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::get('me', 'AuthController@me');
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::get('me', [AuthController::class, 'me']);
 });
 
 //Authentication routes
 Route::group([
-    'namespace' => 'App\Http\Controllers\Auth',
     'prefix' => 'auth'
 ], function () {
-    Route::post('register', 'RegisterController@register');
+    Route::post('register', [RegisterController::class, 'register']);
+});
+
+//Job routes
+Route::group([
+    'middleware' => 'api'
+], function () {
+    Route::apiResource('jobs', JobController::class);
 });

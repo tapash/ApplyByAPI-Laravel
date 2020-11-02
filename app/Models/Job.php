@@ -24,4 +24,11 @@ class Job extends Model
         'required_skills'
     ];
 
+    /**
+     * Get the user that owns the job.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

@@ -17,7 +17,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        return Job::all();
+        return auth()->user()->jobs;
     }
 
     /**
@@ -35,7 +35,7 @@ class JobController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Job is successfully created'
-        ]);
+        ], 201);
     }
 
     /**

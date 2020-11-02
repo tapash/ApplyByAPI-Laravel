@@ -25,12 +25,12 @@ class UpdateJobRequest extends FormRequest
     public function rules()
     {
         return [
-            'job_title' => ['required', 'string', 'min:5', 'max:100'],
-            'is_remote' => ['required', 'boolean'],
-            'job_location' => ['nullable', 'string', 'min:5', 'max:100'],
-            'job_type' => ['required', 'integer', Rule::in([1, 2, 3])],
-            'job_description' => ['required', 'string', 'min:10', 'max:1000'],
-            'required_skills' => ['nullable', 'string', 'min:2', 'max:100']
+            'job_title' => ['sometimes', 'required', 'string', 'min:5', 'max:100'],
+            'is_remote' => ['sometimes','required', 'boolean'],
+            'job_location' => ['sometimes','nullable', 'string', 'min:5', 'max:100'],
+            'job_type' => ['sometimes','required', 'integer', Rule::in([1, 2, 3])],
+            'job_description' => ['sometimes', 'required', 'string', 'min:10', 'max:1000'],
+            'required_skills' => ['sometimes', 'string', 'min:2', 'max:100']
         ];
     }
 }
