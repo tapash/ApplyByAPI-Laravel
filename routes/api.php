@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\TokenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,11 @@ Route::group([
     'middleware' => 'api'
 ], function () {
     Route::apiResource('jobs', JobController::class);
+});
+
+//Job routes
+Route::group([
+    'middleware' => 'api'
+], function () {
+    Route::post('gen-token', [TokenController::class, 'generateToken']);
 });

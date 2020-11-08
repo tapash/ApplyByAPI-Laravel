@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Job extends Model
 {
@@ -30,5 +31,29 @@ class Job extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+     /**
+     * Get the tokens for the job.
+     */
+    public function tokens()
+    {
+        return $this->hasMany('App\Models\Token');
+    }
+
+    /**
+     * generatate a token for the job.
+     *
+     * @param  array $job
+     * @return Model
+     */
+    public function generateToken($job)
+    {
+        $job = $this->tokens()->create([
+            'token' => Str::random(10),
+            'expired_at' => now()->addMinutes(5)
+        ]);
+
+        return $job;
     }
 }
