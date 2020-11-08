@@ -28,7 +28,7 @@ class JobController extends Controller
      */
     public function store(StoreJobRequest $request)
     {
-        auth()->user()->jobs(
+        $request->user()->addJob(
             $request->validated()
         );
 

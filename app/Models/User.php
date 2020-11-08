@@ -89,4 +89,27 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany('App\Models\Job');
     }
+
+    /**
+     * Add a job of the user.
+     *
+     * @param  array $job
+     * @return Model
+     */
+    public function addJob($job)
+    {
+        $job = $this->jobs()->create($job);
+
+        return $job;
+    }
+
+    /**
+     * Fetch the last published job for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function lastJob()
+    {
+        return $this->hasOne(Job::class)->latest();
+    }
 }
