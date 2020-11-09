@@ -47,5 +47,5 @@ Route::group([
 Route::group([
     'middleware' => 'api'
 ], function () {
-    Route::post('gen-token', [TokenController::class, 'generateToken']);
+    Route::post('gen-token', [TokenController::class, 'generateToken'])->name('generate.token');
 });

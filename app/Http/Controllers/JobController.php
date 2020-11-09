@@ -81,6 +81,6 @@ class JobController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Job is successfully deleted'
-        ]);
+        ], 204);
     }
 }

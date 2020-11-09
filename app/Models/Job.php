@@ -44,10 +44,9 @@ class Job extends Model
     /**
      * generatate a token for the job.
      *
-     * @param  array $job
      * @return Model
      */
-    public function generateToken($job)
+    public function generateToken()
     {
         $job = $this->tokens()->create([
             'token' => Str::random(10),

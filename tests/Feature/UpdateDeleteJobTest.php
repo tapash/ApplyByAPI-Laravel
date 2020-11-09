@@ -36,7 +36,7 @@ class UpdateDeleteJobTest extends TestCase
         $response = $this->deleteJson(route('jobs.destroy', $job->id));
 
         $response
-            ->assertStatus(200);
+            ->assertStatus(204);
     }
 
     /** @test */
