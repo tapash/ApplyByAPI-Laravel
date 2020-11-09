@@ -112,4 +112,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(Job::class)->latest();
     }
+
+    /**
+     * Get all of the applications for the user.
+     */
+    public function applications()
+    {
+        return $this->hasManyThrough('App\Models\Application', 'App\Models\Job');
+    }
 }

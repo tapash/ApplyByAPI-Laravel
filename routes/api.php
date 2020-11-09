@@ -49,3 +49,10 @@ Route::group([
 ], function () {
     Route::post('gen-token', [TokenController::class, 'generateToken'])->name('generate.token');
 });
+
+//apply route
+Route::group([
+    'middleware' => 'check.jobtoken'
+], function () {
+    Route::post('apply', [JobController::class, 'apply'])->name('apply.job');
+});

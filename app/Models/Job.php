@@ -33,12 +33,20 @@ class Job extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-     /**
+    /**
      * Get the tokens for the job.
      */
     public function tokens()
     {
         return $this->hasMany('App\Models\Token');
+    }
+
+    /**
+     * Get the applications for the job.
+     */
+    public function applications()
+    {
+        return $this->hasMany('App\Models\Application');
     }
 
     /**
@@ -54,5 +62,18 @@ class Job extends Model
         ]);
 
         return $job;
+    }
+
+    /**
+     * Add a application of the job.
+     *
+     * @param  array $application
+     * @return Model
+     */
+    public function applyJob($application)
+    {
+        return $this
+            ->applications()
+            ->create($application);
     }
 }
