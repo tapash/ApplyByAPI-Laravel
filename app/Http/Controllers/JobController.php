@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
+use App\Http\Resources\JobResources;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,9 @@ class JobController extends Controller
      */
     public function index()
     {
-        return auth()->user()->jobs;
+        return JobResources::collection(
+            auth()->user()->jobs
+        );
     }
 
     /**
@@ -46,7 +49,7 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        return $job;
+        return new JobResources($job);
     }
 
     /**
@@ -65,7 +68,7 @@ class JobController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Job is successfully updated'
-        ]);
+        ], 202);
     }
 
     /**

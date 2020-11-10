@@ -22,6 +22,7 @@ class CreateJobsTable extends Migration
             $table->integer('job_type')->default(1)->comment('1=full-time 2=part-time 3=contactual');
             $table->text('job_description');
             $table->string('required_skills', 100)->nullable()->comment('example:laravel php aws');
+            $table->boolean('job_status');
             $table->timestamps();
             $table->softDeletes();
         });
