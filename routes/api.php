@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\JobController;
@@ -54,5 +55,5 @@ Route::group([
 Route::group([
     'middleware' => 'check.jobtoken'
 ], function () {
-    Route::post('apply', [JobController::class, 'apply'])->name('apply.job');
+    Route::post('apply', [ApplicationController::class, 'apply'])->name('apply.job');
 });
