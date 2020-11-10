@@ -71,6 +71,8 @@ class JobController extends Controller
      */
     public function update(UpdateJobRequest $request, Job $job)
     {
+        $this->authorize('update', $job);
+
         $job->update(
             $request->validated()
         );
@@ -89,6 +91,8 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
+        $this->authorize('delete', $job);
+
         $job->delete();
 
         return response()->json([
