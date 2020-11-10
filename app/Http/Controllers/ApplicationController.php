@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class ApplicationController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['apply']]);
+        $this->middleware('check.jobtoken', ['only' => ['apply']]);
     }
 
     /**
@@ -24,9 +26,15 @@ class ApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Job $job)
+    public function index(Request $request)
     {
-        return Application::latest()->all();
+        $request->validate([
+            'job' => 'required|integer'
+        ]);
+
+       $job = Job::findOrFail($request->job);
+
+        return ApplicationResource::collection($job->applications);
     }
 
     /**
@@ -59,7 +67,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        return $application;
+        return new ApplicationResource($application);
     }
 
     /**

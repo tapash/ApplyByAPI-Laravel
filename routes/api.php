@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 //Authentication routes
 Route::group([
-    'middleware' => 'api',
     'prefix' => 'auth'
 ], function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -38,22 +37,8 @@ Route::group([
 });
 
 //Job routes
-Route::group([
-    'middleware' => 'api'
-], function () {
-    Route::apiResource('jobs', JobController::class);
-});
+Route::apiResource('jobs', JobController::class);
 
-//Job routes
-Route::group([
-    'middleware' => 'api'
-], function () {
-    Route::post('gen-token', [TokenController::class, 'generateToken'])->name('generate.token');
-});
+Route::post('gen-token', [TokenController::class, 'generateToken'])->name('generate.token');
 
-//apply route
-Route::group([
-    'middleware' => 'check.jobtoken'
-], function () {
-    Route::post('apply', [ApplicationController::class, 'apply'])->name('apply.job');
-});
+Route::post('apply', [ApplicationController::class, 'apply'])->name('apply.job');
