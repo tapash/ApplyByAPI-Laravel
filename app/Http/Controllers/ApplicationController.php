@@ -67,6 +67,8 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
+        $this->authorize('view', $application);
+
         return new ApplicationResource($application);
     }
 
@@ -78,6 +80,8 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
+        $this->authorize('delete', $application);
+
         $application->delete();
 
         return response()->json([
