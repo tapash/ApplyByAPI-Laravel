@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,7 +24,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'name' => ['required', 'string', 'min:2', 'max:50'],
             'company_name' => ['required', 'string', 'min:2', 'max:50'],
-            'company_logo' => ['nullable', 'string', 'image', 'mimes:jpeg,bmp,png,gif'],
+            'company_image' => ['nullable', 'image', 'mimes:jpeg,bmp,png,gif'],
             'company_website' => ['nullable', 'min:2', 'max:255'],
             'company_description' => ['nullable', 'string', 'min:10', 'max:1000'],
             'company_address' => ['nullable', 'string', 'min:2', 'max:100'],
@@ -53,13 +52,15 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
-
-        if ($response = $this->registered($request, $user)) {
-            return $response;
+        if($request->hasFile('company_logo')) {
+            $request->merge([
+                'company_logo' => $request->company_image->storePublicly('employeers')
+            ]);
         }
 
-        return new Response('', 201);
+        event(new Registered($user = $this->create($request->all())));
+
+        return $this->registered($request, $user);
     }
 
     /**
