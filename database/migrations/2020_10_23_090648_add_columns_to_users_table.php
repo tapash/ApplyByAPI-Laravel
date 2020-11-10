@@ -15,10 +15,10 @@ class AddColumnsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('company_name')->after('password')->default('');
-            $table->string('company_logo')->nullable()->after('company_name')->default('');
+            $table->string('company_logo')->after('company_name')->default('');
             $table->string('company_website')->nullable()->after('company_logo')->default('');
-            $table->text('company_description')->nullable()->after('company_website')->default('');
-            $table->text('company_address')->nullable()->after('company_description')->default('');
+            $table->text('company_description')->nullable()->after('company_website');
+            $table->text('company_address')->nullable()->after('company_description');
             $table->softDeletes();
         });
     }

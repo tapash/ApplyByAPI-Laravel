@@ -103,7 +103,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $this->guard()->factory()->getTTL() * 60
-        ]);
+        ], 200);
     }
 
     /**
@@ -142,11 +142,7 @@ class AuthController extends Controller
     {
         $this->guard()->logout();
 
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return new JsonResponse([], 204);
+        return $this->loggedOut($request);
     }
 
     /**
@@ -160,7 +156,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Successfully logged out'
-        ]);
+        ], 200);
     }
 
     /**
