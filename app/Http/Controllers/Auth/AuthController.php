@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Traits\Authenticatable;
+use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,9 @@ class AuthController extends Controller
         $this->validateLogin($request);
 
         if ($token = $this->attemptLogin($request)) {
+
+            event(new Authenticated($this->guard(), $this->guard()->user()));
+
             return $this->sendLoginResponse($token);
         }
 
