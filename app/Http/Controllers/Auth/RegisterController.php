@@ -52,12 +52,11 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        if($request->hasFile('company_logo')) {
+        if($request->hasFile('company_image')) {
             $request->merge([
                 'company_logo' => $request->company_image->storePublicly('employeers')
             ]);
         }
-
         event(new Registered($user = $this->create($request->all())));
 
         return $this->registered($request, $user);
